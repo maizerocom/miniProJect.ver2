@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <br /><br />
+    <div class="row">
+        <div class="col-6">
+            {% if user.is_authenticated %}
+            <a href="{% url 'resf_add' res_f.id %}"><button type="button" class="btn btn-secondary ml-3">Create Menu</button></a>
+            {% endif %}
+            <br /><br />
+            <p class="font-weight-bolder">ชื่อร้าน >> {{res_f.name}}</p>
+            <p class="font-weight-bolder">ชื่อเจ้าของร้าน >> {{res_f.owner}}</p>
+            <p class="font-weight-bolder">เวลาเปิด >> {{res_f.open_time}}</p>
+            <p class="font-weight-bolder">เวลาปิด >> {{res_f.close_time}}</p>
+        </div>
+        <div class="col-6">
+            <p class="font-weight-bolder"><img src="{{ res_f.picture.url }}" width="300" height="200"></p>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">รายการอาหาร</th>
+                <th scope="col">ราคา</th>
+                {% if user.is_authenticated %}
+                <th scope="col">แก้ไข/ลบ</th>
+                {% endif %}
+            </tr>
+        </thead>
+        {% for lf in list_f %}
+        <tr>
+            <td>{{ lf.food }}</td>
+            <td>{{ lf.price }}</td>
+            <td>
+                <a href="">
+                    <div class="btn btn-primary" id="{{lf.id}}">แก้ไข</div>
+                </a>
+                <a href="{% url 'resf_delete' resf_id=lf.id %}">
+                    <div class="btn btn-warning" id="{{lf.id}}">ลบ</div>
+                </a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

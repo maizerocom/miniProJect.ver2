@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h1>จัดการร้าน</h1>
+    <br />
+    {% if res.id %}
+    <form method="POST" action="{% url 'res_update' res.id %}" enctype="multipart/form-data">
+        {% else %}
+        <!-- Submit to student_add view -->
+        <form method="POST" action="{% url 'res_add' %}" enctype="multipart/form-data">
+            {% endif %}
+            {% csrf_token %}
+            {% if msg %}<p class="text-success">{{msg}}</p>{% endif %}
+            <div class="form-row">
+                <div class="form-group col-6">
+                    <label for="section">ชื่อร้าน:</label>
+                    <input type="text" class="form-control" name="name" id="name" value="{{res.name}}" required>
+                </div>
+                <div class="form-group col-6">
+                    <label for="section">เจ้าของร้าน:</label>
+                    <input type="text" class="form-control" name="owner" id="owner" value="{{res.owner}}" required>
+                </div>
+                <div class="form-group col-6">
+                    <label for="section">รูปภาพ:</label>
+                    <input type="file" class="form-control-file" id="picture" name="picture" value="{{res.picture}}" >
+                </div>
+                <div class="form-group col-6">
+                    <label for="section">เวลาเปิด:</label>
+                    <input type="time" class="form-control" name="open_time" id="open_time" value="{{ res.open_time|time:'H:i' }}"
+                        required>
+                </div>
+                <div class="form-group col-6">
+                    <label for="section">เวลาปิด:</label>
+                    <input type="time" class="form-control" name="close_time" id="close_time" value="{{ res.close_time|time:'H:i' }}"
+                        required>
+                </div>
+                <div class="form-group col-6">
+                    <label for="section">คะแนน:</label>
+                    <select class="form-control" id="rating" name="rating" required>
+                        <option value=''>===เลือก===</option>
+                            {% if res.rating == 1 %}
+                            <option value="1" selected>1</option>
+                            {% else %}
+                            <option value="1">1</option>
+                            {% endif %}
+                            {% if res.rating == 2 %}
+                            <option value="2" selected>2</option>
+                            {% else %}
+                            <option value="2">2</option>
+                            {% endif %}
+                            {% if res.rating == 3 %}
+                            <option value="3" selected>3</option>
+                            {% else %}
+                            <option value="3">3</option>
+                            {% endif %}
+                            {% if res.rating == 4 %}
+                            <option value="4" selected>4</option>
+                            {% else %}
+                            <option value="4">4</option>
+                            {% endif %}
+                            {% if res.rating == 5 %}
+                            <option value="5" selected>5</option>
+                            {% else %}
+                            <option value="5">5</option>
+                            {% endif %}
+                            {% if res.rating == 6 %}
+                            <option value="6" selected>6</option>
+                            {% else %}
+                            <option value="6">6</option>
+                            {% endif %}
+                            {% if res.rating == 7 %}
+                            <option value="7" selected>7</option>
+                            {% else %}
+                            <option value="7">7</option>
+                            {% endif %}
+                            {% if res.rating == 8 %}
+                            <option value="8" selected>8</option>
+                            {% else %}
+                            <option value="8">8</option>
+                            {% endif %}
+                            {% if res.rating == 9 %}
+                            <option value="9" selected>9</option>
+                            {% else %}
+                            <option value="9">9</option>
+                            {% endif %}
+                            {% if res.rating == 10 %}
+                            <option value="10" selected>10</option>
+                            {% else %}
+                            <option value="10">10</option>
+                            {% endif %}
+                    </select>
+                </div>
+                <div class="form-group col-6">
+                    <label for="section">อนุมัติโดย:</label>
+                    <input type="text" class="form-control" name="approve_by" id="approve_by" value="{{res.approve_by}}"
+                        required>
+                </div>
+                <div class="form-group col-6">
+                    <label for="section">คณะ:</label>
+                    <select class="form-control" id="faculty" name="faculty" required>
+                        <option value=''>---เลือก---</option>
+                        {% for i in faculty %}
+                        {% if i == res.faculty %}
+                        <option value='{{i.id}}' selected>{{i}}</option>
+                        {% else %}
+                        <option value='{{i.id}}'>{{i}}</option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button type="reset" class="btn btn-warning ml-3">Reset Form</button>
+            <button type="submit" class="btn btn-primary ml-3">Submit</button>
+        </form>
+</div>
+{% endblock %}
